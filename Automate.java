@@ -336,13 +336,53 @@ if (l == null || l.isEmpty() || l.matches(".*[A-Z-&|>?()].*")) {
 		afficherLabels();
 	}
 
-	public void afficherEvaluation(Formule formule) { // Pour tous les états, afficher l'évaluation de la formule passé en paramètre (si elle est déjà évalué)
+	/*public void afficherEvaluation(Formule formule) { // Pour tous les états, afficher l'évaluation de la formule passé en paramètre (si elle est déjà évalué)
 		for(String etat : evaluations.keySet()) {
 			if(evaluations.get(etat).containsKey(formule)) {
 				System.out.println("Pour l'etat " + etat + ", " + formule.toString() + " -> " + evaluations.get(etat).get(formule));
 			}
 		}
-	}
+	}*/
+public void afficherEvaluation(Formule formule) {
+    for (String etat : evaluations.keySet()) {
+        if (evaluations.get(etat).containsKey(formule)) {
+            boolean resultatEtat = evaluations.get(etat).get(formule);
+
+            System.out.println("Pour l'etat " + etat + ", " + formule.toString() + " -> " + resultatEtat);
+
+            // Logique spécifique pour la formule "EX"
+            if (formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.EX) {
+                if (resultatEtat) {
+                    // Si la formule "EX" est vraie pour un état, retourner true immédiatement
+                    System.out.println("La formule " + formule.toString() + " est vraie :-)");
+                    return;
+                }
+            }else if(formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.EU) {
+                if (resultatEtat) {
+                    // Si la formule "EU" est vraie pour un état, retourner true immédiatement
+                    System.out.println("La formule " + formule.toString() + " est vraie :-)");
+                    return;
+                }else if(formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.AU) {
+                if (resultatEtat != true) {
+                    // Si la formule "EU" est vraie pour un état, retourner true immédiatement
+                    System.out.println("La formule " + formule.toString() + " est fausse :-(");
+                    return;
+                }else{
+					System.out.println("La formule " + formule.toString() + " est vraie :-)");
+
+				}
+				}
+        }
+    }
+
+    // Si la formule n'est pas "EX" ou si aucun état ne satisfait la formule "EX", retourner false
+    System.out.println("La formule " + formule.toString() + " est fausse :-(");
+}
+}
+
+
+
+
 	
 
 	/*public void afficherEvaluation(Formule formule) {
@@ -525,6 +565,51 @@ public void afficherEvaluationPourToutesLesFormules(List<Formule> formules) {
 								}
 							}
 							break;
+							/*case AU: // POUR TOUT UNTIL : φ = A(φ'Uφ''Uφ''')
+    ArrayList<String> L4 = new ArrayList<>();
+    Map<String, Integer> nb4 = new HashMap<>(); // chaque état sera associé à son nombre de successeurs
+    for (String e : ensembleEtats) { // pour tous les états
+        nb4.put(e, getSuccesseurs(e).size());
+        setEvaluation(e, formule, false); // la formule est évaluée false par défaut
+        if (getEvaluation(e, droite)) { // si s.φ'' == true
+            L4.add(e);
+        }
+    }
+    while (!L4.isEmpty()) {
+        String s = L4.get(0);
+        L4.remove(s);
+        setEvaluation(s, formule, true);
+        for (String predecesseur : getPredecesseurs(s)) { // pour tous les prédécesseurs de cet état
+            int valeurNb = nb.get(predecesseur) - 1;
+            nb.put(predecesseur, valeurNb);
+            if (valeurNb == 0 && getEvaluation(predecesseur, gauche) && !getEvaluation(predecesseur, formule)) {
+                L4.add(predecesseur);
+            }
+        }
+    }
+
+    // Ajouter une boucle similaire pour la troisième sous-formule φ'''
+    ArrayList<String> L3 = new ArrayList<>();
+    Map<String, Integer> nb3 = new HashMap<>(); // chaque état sera associé à son nombre de successeurs
+    for (String e : ensembleEtats) { // pour tous les états
+        nb3.put(e, getSuccesseurs(e).size());
+        // Logique pour déterminer si la troisième sous-formule est vraie initialement
+        if (getEvaluation(e, droite)) {
+            L3.add(e);
+        }
+    }
+    while (!L3.isEmpty()) {
+        String s = L3.get(0);
+        L3.remove(s);
+        // Logique pour marquer la troisième sous-formule
+        for (String predecesseur : getPredecesseurs(s)) {
+            int valeurNb = nb3.get(predecesseur) - 1;
+            nb3.put(predecesseur, valeurNb);
+            // Logique pour déterminer si la troisième sous-formule est vraie à cet état
+        }
+    }
+    break;*/
+
 						case IMPLIES: // IMPLICATION : φ = (φ'=>φ'')
 							marquerEtEvaluer(formule,new FormuleXArgs(FType.OR,new FormuleXArgs(FType.NOT,gauche),droite)); // on sait que (φ'=>φ'') = (-φ'|φ'')
 							break;

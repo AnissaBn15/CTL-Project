@@ -8,39 +8,6 @@ public class CTL_Main {
 		return f.exists() && f.isFile() && f.canRead();
 	}
 
-	public static void graph1(Automate automate) { // VERSION MANUELLE DE L'AUTOMATE GRAPH1.TXT (A UTILISER EN CAS DE PROBLEME) :
-		for(int i = 1; i < 9; i++) {
-			automate.ajouterEtat(String.format("%d",i));
-		}
-
-		automate.ajouterTransition("1","1");
-		automate.ajouterTransition("1","2");
-		automate.ajouterTransition("2","3");
-		automate.ajouterTransition("2","5");
-		automate.ajouterTransition("2","6");
-		automate.ajouterTransition("3","6");
-		automate.ajouterTransition("4","3");
-		automate.ajouterTransition("4","4");
-		automate.ajouterTransition("5","1");
-		automate.ajouterTransition("5","5");
-		automate.ajouterTransition("6","5");
-		automate.ajouterTransition("6","7");
-		automate.ajouterTransition("7","8");
-		automate.ajouterTransition("8","4");
-
-		automate.ajouterLabel("1","q");
-		automate.ajouterLabel("2","p");
-		automate.ajouterLabel("2","q");
-		automate.ajouterLabel("3","q");
-		automate.ajouterLabel("4","r");
-		automate.ajouterLabel("5","p");
-		automate.ajouterLabel("5","r");
-		automate.ajouterLabel("6","p");
-		automate.ajouterLabel("6","r");
-		automate.ajouterLabel("7","p");
-		automate.ajouterLabel("7","q");
-	}
-
 	public static void main(String[] args) {
 		Automate automate = new Automate();
 		Scanner scanner = new Scanner(System.in);
