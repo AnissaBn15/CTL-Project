@@ -1,18 +1,14 @@
+********************* PROJET DE SPECIFICATION ET RESOLUTION DE SYSTEMES CRITIQUES ********************
 Projet Réalisé Par :
-BEN BOUDAOUD Anissa
-LAGHOUB Nassim
+- BEN BOUDAOUD Anissa
+- LAGHOUB Nassim
 
-Le Model Checker CTL, réalisé dans le cadre du cours "Systèmes Complexes" en M2 Informatique avec une spécialisation en Programmation et Logiciels Sûrs, constitue une création intégrale.
 
-L'objectif du projet est de développer un Model Checker CTL à partir de zéro. Ce checker permet d'évaluer des formules pour déterminer si elles satisfont un système, et ce, pour chaque état d'un automate (structure de Kripke).
-
-Le parseur utilisé est entièrement fait par nous.
-
-POUR LANCER LE PROGRAMME
+*********************************** POUR LANCER LE PROGRAMME *******************************************
 Commencez par compiler : javac *.java
 Ensuite, exécutez : java CTL_Main
 
-À ce stade, vous devez entrer le nom du fichier « XXX.txt » (situé dans le dossier "automates") à utiliser, avec l'automate correspondant. Par exemple, le fichier de base (par défaut) : « graph1.txt » correspond à la structure suivante :
+À ce stade, vous devez entrer le nom du fichier « xxxx.txt » (situé dans le dossier "automates") à utiliser, avec l'automate correspondant. Par exemple, le fichier de base (par défaut) : « graph1.txt » correspond à la structure suivante :
 
 states:
 q1;
@@ -73,7 +69,6 @@ E(f1Uf2) = il existe f1 UNTIL f2, ex: « E(aUb) » (Attention : parenthèses apr
 AXf = pour tout NEXT f, ex: « AXa »
 AFf = pour tout FUTUR f, ex: « AFa »
 AGf = pour tout GLOBAL f, ex: « AGa »
-A(f1Uf2) = pour tout f1 UNTIL f2, ex: « A(aUb) » (Attention : parenthèses après le A obligatoires)
 Vous pouvez également afficher les détails en tapant : « voirDetails ».
 
 L'option « voirDetails » est utile pour consulter toutes les évaluations précédentes (les marquages récursifs intermédiaires inclus). Attention -> les détails fournis concernent toutes les anciennes formules tapées depuis le début (il faut quitter le programme pour vider cela).

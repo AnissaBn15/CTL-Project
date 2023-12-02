@@ -30,60 +30,6 @@ public class Automate {
           listeDeFormules.add(formule);
 } 
 
-
-
-	/*public void ajouterEtat(String e) { // Ajouter un état
-		ensembleEtats.add(e);
-	}
-
-	public void ajouterTransition(String e1, String e2) { // Ajouter une transition entre 2 états : e1 -> e2, avec e1 = départ et e2 = arrivé
-		if(!ensembleEtats.contains(e1) || !ensembleEtats.contains(e2)) { // si l'état e1 ou e2 n'existe pas
-			System.out.println("Impossible d'ajouter la transition entre l'état " + e1 + " et " + e2 + " car l'état " + (!ensembleEtats.contains(e1) ? "e1" : "e2") + " n'existe pas");
-			return;
-		}
-		transitions.computeIfAbsent(e1,key -> new HashSet<>()).add(e2); // ajoute la transition -> e2 aux transitions de l'état e1 (si l'ensemble des transitions de e1 n'existe pas, on le crée)
-	}*/
-
-/*	public void ajouterLabel(String etat, String l) { // Ajouter une étiquette dans un état
-// Supprimer les guillemets doubles autour de l'étiquette
-l = l.replaceAll("\"", "");
-
-if (l == null || l.isEmpty() || l.matches(".*[A-Z-&|>?()].*")) {
-    System.out.println("Impossible d'ajouter l'étiquette \"" + l + "\" pour l'état " + etat + " car c'est une étiquette interdite : [vide, contient des majuscules, -, &, |, >, ?]");
-    return;
-}*/
-
-		/*if (l == null || l.isEmpty() || !l.equals(l.toLowerCase()) || l.matches(".*[-&|>?()].*")) {
-         System.out.println("Impossible d'ajouter l'étiquette \"" + l + "\" pour l'état " + etat + " car c'est une étiquette interdite : [vide, contient des majuscules, -, &, |, >, ?, (,)]");
-        return;
-}*/
-		/*if(!ensembleEtats.contains(etat)) { // si l'état n'existe pas
-			System.out.println("Impossible d'ajouter l'étiquette \"" + l + "\" pour l'état " + etat + " car cet état n'existe pas");
-			return;
-		}
-		labels.computeIfAbsent(etat,key -> new HashSet<>()).add(l); // on ajoute l'étiquette dans cet état (si les labels de e1 n'existent pas, on le crée)
-		ensembleLabels.add(l); // on ajoute cette étiquette à l'ensemble des labels reconnus de l'automate
-	}*/
-
-	/*public void ajouterLabel(String etat, String label) {
-    // Vérifier si l'état existe
-    if (!ensembleEtats.contains(etat)) {
-        System.out.println("Impossible d'ajouter l'étiquette \"" + label + "\" pour l'état " + etat + " car cet état n'existe pas");
-        return;
-    }
-    
-    // Vérifier si l'étiquette est vide ou contient des caractères interdits
-    if (label == null || label.isEmpty() || label.matches(".*[A-Z-&|>?()].*")) {
-        System.out.println("Impossible d'ajouter l'étiquette \"" + label + "\" pour l'état " + etat + " car c'est une étiquette interdite : [vide, contient des majuscules, -, &, |, >, ?]");
-        return;
-    }
-    
-    // Ajouter l'étiquette à l'état
-    labels.computeIfAbsent(etat, key -> new HashSet<>()).add(label);
-    ensembleLabels.add(label);
-
-}*/
-
     public void ajouterEtat(String e) {
         ensembleEtats.add(e);
     }
@@ -321,14 +267,23 @@ if (l == null || l.isEmpty() || l.matches(".*[A-Z-&|>?()].*")) {
 	public void afficherEtats() { System.out.println("Voici la liste des etats : " + ensembleEtats); }
 
 	public void afficherTransitions() {
-		System.out.println("Voici la liste des transitions : ");
-		transitions.forEach((e1, e2Set) -> e2Set.forEach(e2 -> System.out.println(e1 + " -> " + e2)));
-	}
+    System.out.println("Voici la liste des transitions : ");
+    if (!transitions.isEmpty()) {
+        transitions.forEach((e1, e2Set) -> e2Set.forEach(e2 -> System.out.println(e1 + " -> " + e2)));
+    } else {
+        System.out.println("Aucune transition.");
+    }
+}
 
-	public void afficherLabels() {
-		System.out.println("Voici la liste des labels : ");
-		labels.forEach((etat, labelSet) -> System.out.println("label de l'etat " + etat + " : " + labelSet));
-	}
+public void afficherLabels() {
+    System.out.println("Voici la liste des labels : ");
+    if (!labels.isEmpty()) {
+        labels.forEach((etat, labelSet) -> System.out.println("label de l'etat " + etat + " : " + labelSet));
+    } else {
+        System.out.println("Aucun label.");
+    }
+}
+
 
 	public void afficherInformations() { // Affiche les états, les transitions et les étiquettes (labels) de l'automate
 		afficherEtats();
@@ -336,21 +291,17 @@ if (l == null || l.isEmpty() || l.matches(".*[A-Z-&|>?()].*")) {
 		afficherLabels();
 	}
 
-	/*public void afficherEvaluation(Formule formule) { // Pour tous les états, afficher l'évaluation de la formule passé en paramètre (si elle est déjà évalué)
-		for(String etat : evaluations.keySet()) {
-			if(evaluations.get(etat).containsKey(formule)) {
-				System.out.println("Pour l'etat " + etat + ", " + formule.toString() + " -> " + evaluations.get(etat).get(formule));
-			}
-		}
-	}*/
-public void afficherEvaluation(Formule formule) {
+/*public void afficherEvaluation(Formule formule) {
     for (String etat : evaluations.keySet()) {
         if (evaluations.get(etat).containsKey(formule)) {
             boolean resultatEtat = evaluations.get(etat).get(formule);
 
             System.out.println("Pour l'etat " + etat + ", " + formule.toString() + " -> " + resultatEtat);
 
-            // Logique spécifique pour la formule "EX"
+           
+        }
+    }
+	 // Logique spécifique pour la formule "EX"
             if (formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.EX) {
                 if (resultatEtat) {
                     // Si la formule "EX" est vraie pour un état, retourner true immédiatement
@@ -372,47 +323,93 @@ public void afficherEvaluation(Formule formule) {
 
 				}
 				}
-        }
-    }
-
     // Si la formule n'est pas "EX" ou si aucun état ne satisfait la formule "EX", retourner false
     System.out.println("La formule " + formule.toString() + " est fausse :-(");
 }
 }
+*/
 
-
-
-
-	
-
-	/*public void afficherEvaluation(Formule formule) {
-    int compteurFormule = 1;
+/*public void afficherEvaluation(Formule formule) {
+    boolean formuleVerifiee = false;
 
     for (String etat : evaluations.keySet()) {
         if (evaluations.get(etat).containsKey(formule)) {
-            String resultat = evaluations.get(etat).get(formule) ? "Vrai : -)" : "Faux :-)";
-            System.out.println("Formule " + compteurFormule + " : " + resultat);
-            compteurFormule++;
+            boolean resultatEtat = evaluations.get(etat).get(formule);
+
+            System.out.println("Pour l'état " + etat + ", " + formule.toString() + " -> " + resultatEtat);
+
+            // Logique spécifique pour les formules "EX", "EU" et "AU"
+            if (formule instanceof FormuleXArgs) {
+                FType type = ((FormuleXArgs) formule).getType();
+
+                if (type == FType.EX && resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "EX" est vraie pour au moins un état
+                } else if ((type == FType.EU || type == FType.AU) && resultatEtat) {
+                    formuleVerifiee = true;
+                } else if (type == FType.AU && !resultatEtat) {
+                    formuleVerifiee = false;
+                    break; // Sortir de la boucle si la formule "AU" est fausse pour au moins un état
+                }
+            }
         }
     }
-}*/
-/*
-public void afficherEvaluationPourToutesLesFormules(List<Formule> formules) {
-    int compteurFormule = 1;
 
-    for (Formule formule : formules) {
-        boolean resultat = true;
-
-        for (String etat : evaluations.keySet()) {
-            resultat = resultat && evaluations.get(etat).get(formule);
-        }
-
-        String formuleResultat = resultat ? "Vrai : -)" : "Faux :-)";
-        System.out.println("Formule " + compteurFormule + " : " + formuleResultat);
-        compteurFormule++;
+    // Afficher le message après avoir parcouru tous les états
+    if (formuleVerifiee) {
+        System.out.println("La formule " + formule.toString() + " est vraie :-)");
+    } else {
+        System.out.println("La formule " + formule.toString() + " est fausse :-(");
     }
 }*/
+public void afficherEvaluation(Formule formule) {
+    boolean formuleVerifiee = false;
 
+    for (String etat : evaluations.keySet()) {
+        if (evaluations.get(etat).containsKey(formule)) {
+            boolean resultatEtat = evaluations.get(etat).get(formule);
+
+            System.out.println("Pour l'état " + etat + ", " + formule.toString() + " -> " + resultatEtat);
+
+            // Logique spécifique pour les formules "EX", "EU", "AU", "AF", "EF", "AG", "EG", "AX", "EX"
+            if (formule instanceof FormuleXArgs) {
+                FType type = ((FormuleXArgs) formule).getType();
+
+                if (type == FType.EX && resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "EX" est vraie pour au moins un état
+                } else if ((type == FType.EU || type == FType.AU) && resultatEtat) {
+                    formuleVerifiee = true;
+                } else if (type == FType.AU && !resultatEtat) {
+                    formuleVerifiee = false;
+                    break; // Sortir de la boucle si la formule "AU" est fausse pour au moins un état
+                } else if (type == FType.AF && resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "AF" est fausse pour au moins un état
+                } else if (type == FType.EF && resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "EF" est vraie pour au moins un état
+                } else if (type == FType.AG && !resultatEtat) {
+                    formuleVerifiee = false;
+                    break; // Sortir de la boucle si la formule "AG" est fausse pour au moins un état
+                } else if (type == FType.EG && resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "EG" est vraie pour au moins un état
+                } else if (type == FType.AX && !resultatEtat) {
+                    formuleVerifiee = true;
+                    break; // Sortir de la boucle si la formule "AX" est fausse pour au moins un état
+                }
+            }
+        }
+    }
+
+    // Afficher le message après avoir parcouru tous les états
+    if (formuleVerifiee) {
+        System.out.println("La formule " + formule.toString() + " est vraie :-)");
+    } else {
+        System.out.println("La formule " + formule.toString() + " est fausse :-(");
+    }
+}
 
 
 	public void afficherToutesEvaluations() { // Pour tous les états, afficher toutes les évaluations de toutes les formules déjà évaluées
@@ -442,7 +439,6 @@ public void afficherEvaluationPourToutesLesFormules(List<Formule> formules) {
 		for(String etat : evaluations.keySet()) {
 			return evaluations.get(etat).containsKey(formule);
 		}
-		//return false;
 		return evaluations.values().stream().anyMatch(etatMap -> etatMap.containsKey(formule));
 	}
 
