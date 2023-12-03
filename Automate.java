@@ -290,78 +290,6 @@ public void afficherLabels() {
 		afficherTransitions();
 		afficherLabels();
 	}
-
-/*public void afficherEvaluation(Formule formule) {
-    for (String etat : evaluations.keySet()) {
-        if (evaluations.get(etat).containsKey(formule)) {
-            boolean resultatEtat = evaluations.get(etat).get(formule);
-
-            System.out.println("Pour l'etat " + etat + ", " + formule.toString() + " -> " + resultatEtat);
-
-           
-        }
-    }
-	 // Logique spécifique pour la formule "EX"
-            if (formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.EX) {
-                if (resultatEtat) {
-                    // Si la formule "EX" est vraie pour un état, retourner true immédiatement
-                    System.out.println("La formule " + formule.toString() + " est vraie :-)");
-                    return;
-                }
-            }else if(formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.EU) {
-                if (resultatEtat) {
-                    // Si la formule "EU" est vraie pour un état, retourner true immédiatement
-                    System.out.println("La formule " + formule.toString() + " est vraie :-)");
-                    return;
-                }else if(formule instanceof FormuleXArgs && ((FormuleXArgs) formule).getType() == FType.AU) {
-                if (resultatEtat != true) {
-                    // Si la formule "EU" est vraie pour un état, retourner true immédiatement
-                    System.out.println("La formule " + formule.toString() + " est fausse :-(");
-                    return;
-                }else{
-					System.out.println("La formule " + formule.toString() + " est vraie :-)");
-
-				}
-				}
-    // Si la formule n'est pas "EX" ou si aucun état ne satisfait la formule "EX", retourner false
-    System.out.println("La formule " + formule.toString() + " est fausse :-(");
-}
-}
-*/
-
-/*public void afficherEvaluation(Formule formule) {
-    boolean formuleVerifiee = false;
-
-    for (String etat : evaluations.keySet()) {
-        if (evaluations.get(etat).containsKey(formule)) {
-            boolean resultatEtat = evaluations.get(etat).get(formule);
-
-            System.out.println("Pour l'état " + etat + ", " + formule.toString() + " -> " + resultatEtat);
-
-            // Logique spécifique pour les formules "EX", "EU" et "AU"
-            if (formule instanceof FormuleXArgs) {
-                FType type = ((FormuleXArgs) formule).getType();
-
-                if (type == FType.EX && resultatEtat) {
-                    formuleVerifiee = true;
-                    break; // Sortir de la boucle si la formule "EX" est vraie pour au moins un état
-                } else if ((type == FType.EU || type == FType.AU) && resultatEtat) {
-                    formuleVerifiee = true;
-                } else if (type == FType.AU && !resultatEtat) {
-                    formuleVerifiee = false;
-                    break; // Sortir de la boucle si la formule "AU" est fausse pour au moins un état
-                }
-            }
-        }
-    }
-
-    // Afficher le message après avoir parcouru tous les états
-    if (formuleVerifiee) {
-        System.out.println("La formule " + formule.toString() + " est vraie :-)");
-    } else {
-        System.out.println("La formule " + formule.toString() + " est fausse :-(");
-    }
-}*/
 public void afficherEvaluation(Formule formule) {
     boolean formuleVerifiee = false;
 
@@ -374,7 +302,6 @@ public void afficherEvaluation(Formule formule) {
             // Logique spécifique pour les formules "EX", "EU", "AU", "AF", "EF", "AG", "EG", "AX", "EX"
             if (formule instanceof FormuleXArgs) {
                 FType type = ((FormuleXArgs) formule).getType();
-
                 if (type == FType.EX && resultatEtat) {
                     formuleVerifiee = true;
                     break; // Sortir de la boucle si la formule "EX" est vraie pour au moins un état
@@ -389,14 +316,14 @@ public void afficherEvaluation(Formule formule) {
                 } else if (type == FType.EF && resultatEtat) {
                     formuleVerifiee = true;
                     break; // Sortir de la boucle si la formule "EF" est vraie pour au moins un état
-                } else if (type == FType.AG && !resultatEtat) {
-                    formuleVerifiee = false;
+                } else if (type == FType.AG && resultatEtat) {
+                    formuleVerifiee = true;
                     break; // Sortir de la boucle si la formule "AG" est fausse pour au moins un état
                 } else if (type == FType.EG && resultatEtat) {
                     formuleVerifiee = true;
                     break; // Sortir de la boucle si la formule "EG" est vraie pour au moins un état
                 } else if (type == FType.AX && !resultatEtat) {
-                    formuleVerifiee = true;
+                    formuleVerifiee = false;
                     break; // Sortir de la boucle si la formule "AX" est fausse pour au moins un état
                 }
             }
@@ -561,51 +488,6 @@ public void afficherEvaluation(Formule formule) {
 								}
 							}
 							break;
-							/*case AU: // POUR TOUT UNTIL : φ = A(φ'Uφ''Uφ''')
-    ArrayList<String> L4 = new ArrayList<>();
-    Map<String, Integer> nb4 = new HashMap<>(); // chaque état sera associé à son nombre de successeurs
-    for (String e : ensembleEtats) { // pour tous les états
-        nb4.put(e, getSuccesseurs(e).size());
-        setEvaluation(e, formule, false); // la formule est évaluée false par défaut
-        if (getEvaluation(e, droite)) { // si s.φ'' == true
-            L4.add(e);
-        }
-    }
-    while (!L4.isEmpty()) {
-        String s = L4.get(0);
-        L4.remove(s);
-        setEvaluation(s, formule, true);
-        for (String predecesseur : getPredecesseurs(s)) { // pour tous les prédécesseurs de cet état
-            int valeurNb = nb.get(predecesseur) - 1;
-            nb.put(predecesseur, valeurNb);
-            if (valeurNb == 0 && getEvaluation(predecesseur, gauche) && !getEvaluation(predecesseur, formule)) {
-                L4.add(predecesseur);
-            }
-        }
-    }
-
-    // Ajouter une boucle similaire pour la troisième sous-formule φ'''
-    ArrayList<String> L3 = new ArrayList<>();
-    Map<String, Integer> nb3 = new HashMap<>(); // chaque état sera associé à son nombre de successeurs
-    for (String e : ensembleEtats) { // pour tous les états
-        nb3.put(e, getSuccesseurs(e).size());
-        // Logique pour déterminer si la troisième sous-formule est vraie initialement
-        if (getEvaluation(e, droite)) {
-            L3.add(e);
-        }
-    }
-    while (!L3.isEmpty()) {
-        String s = L3.get(0);
-        L3.remove(s);
-        // Logique pour marquer la troisième sous-formule
-        for (String predecesseur : getPredecesseurs(s)) {
-            int valeurNb = nb3.get(predecesseur) - 1;
-            nb3.put(predecesseur, valeurNb);
-            // Logique pour déterminer si la troisième sous-formule est vraie à cet état
-        }
-    }
-    break;*/
-
 						case IMPLIES: // IMPLICATION : φ = (φ'=>φ'')
 							marquerEtEvaluer(formule,new FormuleXArgs(FType.OR,new FormuleXArgs(FType.NOT,gauche),droite)); // on sait que (φ'=>φ'') = (-φ'|φ'')
 							break;
