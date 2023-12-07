@@ -1,22 +1,22 @@
-*********************PROJET DE SPECIFICATION ET RESOLUTION DE SYSTEMES CRITIQUES********************
+#PROJET DE SPECIFICATION ET RESOLUTION DE SYSTEMES CRITIQUES
 Projet Réalisé Par :
 - BEN BOUDAOUD Anissa
 - LAGHOUB Nassim
 
-**************************LES FORMULES DE TEST A SAISIR DU PROJET**************************************
+#LES FORMULES DE TEST A SAISIR DU PROJET
 EXp  // retourne Vrai
 EX(p&q)  // retourne Faux
 E(-qU(p|q)) // Vrai
 E((p|q)U(q&-p)) // Vrai
 A(EXpUA(pU-q)) // Faux
-********************************************************************************************************
+
 EXq // Faux
 E(pU-p) // Vrai
 A(pUq) // Vrai
 AF-p   // Vrai
 AG(-p|EF-q) // Vrai
 AX(AF-p|-q) //Faux
-*********************************** POUR LANCER LE PROGRAMME *******************************************
+#POUR LANCER LE PROGRAMME
 Commencez par compiler : javac *.java
 Ensuite, exécutez : java CTL_Main
 -------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Une ligne « labels: » suivie, à chaque ligne suivante, du nom de l'état, sui
 
 Assurez-vous que les informations récupérées par le programme (états, transitions et étiquettes) soient correctes. Ensuite, vous pouvez écrire une formule.
 
-************************************SAISIR UNE FORMULE************************************************
+#SAISIR UNE FORMULE
 Pour saisir une formule, respectez la syntaxe suivante :
 
 p = proposition, nom d'une étiquette (ex: a, b, c, p, q)
@@ -66,7 +66,7 @@ X = Next (suivant)
 F = Future (dans le futur)
 G = Globally (Global)
 U = Until
-*******************La syntaxe reconnue (f = formule) est la suivante********************************
+#La syntaxe reconnue (f = formule) est la suivante
 p = proposition (ou étiquette), ex : « a,b,p,q »
 -f = NOT f, ex : « -a,-b,-p,-q »
 (f1&f2) = f1 AND f2, ex: « (a&b) » (Attention: parenthèses extérieures obligatoires)
