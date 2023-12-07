@@ -81,9 +81,7 @@ AXf = pour tout NEXT f, ex: « AXa »
 AFf = pour tout FUTUR f, ex: « AFa »
 AGf = pour tout GLOBAL f, ex: « AGa »
 Vous pouvez également afficher les détails en tapant : « voirDetails ».
-*******************************************************************************************************
+
 L'option « voirDetails » est utile pour consulter toutes les évaluations précédentes (les marquages récursifs intermédiaires inclus). 
-*******************************************************************************************************
+
 Attention ! -> les détails fournis concernent toutes les anciennes formules tapées depuis le début (il faut quitter le programme pour vider cela).
-********************************************************************************************************
------------------------------------------2023/2024------------------------------------------------------
